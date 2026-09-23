@@ -1,4 +1,3 @@
-```markdown
 # Microprocessor and Microcontroller Lab (HCMUT)
 
 This repository contains source code, simulation designs, and technical reports for the **Microprocessor - Microcontroller** course at Ho Chi Minh City University of Technology (HCMUT). The coursework focuses on embedded systems programming using the ARM Cortex-M (STM32F103C6/C8) architecture, STM32CubeIDE (HAL Library), and Proteus simulation.
