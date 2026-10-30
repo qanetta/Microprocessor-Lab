@@ -1,0 +1,9 @@
+input_processing.c:40:12:button_event	24	static
+input_processing.c:92:13:show_time	8	static
+input_processing.c:98:13:enter_phase	16	static
+input_processing.c:126:13:normal_run	8	static
+input_processing.c:142:14:mode_color	16	static
+input_processing.c:146:13:show_value	8	static
+input_processing.c:153:13:enter_mode	32	static
+input_processing.c:183:6:fsm_init	16	static
+input_processing.c:189:6:fsm_for_input_processing	24	static

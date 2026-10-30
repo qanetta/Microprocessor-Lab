@@ -1,0 +1,6 @@
+traffic_light.c:45:13:write_light	24	static
+traffic_light.c:51:13:show_only	24	static
+traffic_light.c:59:6:traffic_all_off	16	static
+traffic_light.c:67:6:traffic_set	16	static
+traffic_light.c:73:6:traffic_blink_reset	4	static
+traffic_light.c:77:6:traffic_toggle_color	24	static

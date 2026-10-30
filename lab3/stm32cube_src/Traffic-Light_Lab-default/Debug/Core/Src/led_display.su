@@ -1,0 +1,8 @@
+led_display.c:35:6:display7SEG	24	static
+led_display.c:48:6:update7SEG	24	static
+led_display.c:59:6:led7_scan	8	static
+led_display.c:65:6:led7_set_pair	16	static
+led_display.c:75:6:traffic_all_off	16	static
+led_display.c:83:6:traffic_set	24	static
+led_display.c:90:6:traffic_show_all	24	static
+led_display.c:100:6:led_debug_toggle	8	static
