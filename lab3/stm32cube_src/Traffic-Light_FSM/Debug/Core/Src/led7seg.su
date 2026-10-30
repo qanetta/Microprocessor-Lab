@@ -1,0 +1,4 @@
+led7seg.c:23:6:display7SEG	24	static
+led7seg.c:47:6:update7SEG	24	static
+led7seg.c:60:6:led7seg_scan	8	static
+led7seg.c:73:6:led7seg_setPair	24	static
