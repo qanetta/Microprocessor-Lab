@@ -1,0 +1,12 @@
+scheduler.c:31:17:sch_lock	16	static,ignoring_inline_asm
+scheduler.c:37:13:sch_unlock	24	static,ignoring_inline_asm
+scheduler.c:44:13:sch_mark_head	4	static
+scheduler.c:49:17:sch_insert	40	static
+scheduler.c:78:13:sch_remove_at	32	static
+scheduler.c:90:17:sch_new_id	4	static
+scheduler.c:97:6:SCH_Init	16	static
+scheduler.c:111:10:SCH_Add_Task	32	static
+scheduler.c:120:9:SCH_Delete_Task	24	static
+scheduler.c:142:6:SCH_Update	4	static
+scheduler.c:155:6:SCH_Dispatch_Tasks	56	static
+scheduler.c:201:10:SCH_Get_Time	4	static
