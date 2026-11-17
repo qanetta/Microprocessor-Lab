@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include "scheduler.h"
+#include "watchdog.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,6 +41,10 @@
 // Task in timestamp moi 10 ms chi chay trong 1 s dau roi bi xoa (demo SCH_Delete_Task,
 // tranh 100 dong/giay lam tran Virtual Terminal)
 #define PRINT_10MS_DURATION_MS	1000
+
+// Thu watchdog: 1 -> them task treo vong lap vo han o t = 6000 ms, IWDG phai reset chip. De 0 khi demo binh thuong
+#define WDG_DEMO_HANG			0
+#define WDG_DEMO_HANG_AT_MS		6000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -111,6 +116,15 @@ static void oneshot_A(void) { printf("[one-shot A ] t = %5lu ms (hen 2000 ms)\r\
 static void oneshot_B1(void){ printf("[one-shot B1] t = %5lu ms (hen 3000 ms, them truoc B2)\r\n", SCH_Get_Time()); }
 static void oneshot_B2(void){ printf("[one-shot B2] t = %5lu ms (hen 3000 ms, them sau B1)\r\n", SCH_Get_Time()); }
 static void oneshot_C(void) { printf("[one-shot C ] t = %5lu ms (hen 4500 ms)\r\n", SCH_Get_Time()); }
+
+#if WDG_DEMO_HANG
+// Gia lap task bi treo: khong bao gio tra ve dispatcher. Ngat TIM2 van chay nhung sau
+// WDG_MAX_MISSED_TICKS tick thi ISR ngung refresh -> khoang 1 s sau IWDG reset chip
+static void task_hang(void){
+	printf("[hang ] t = %5lu ms: task treo, cho watchdog reset...\r\n", SCH_Get_Time());
+	while (1){}
+}
+#endif
 /* USER CODE END 0 */
 
 /**
@@ -167,6 +181,12 @@ int main(void)
   SCH_Add_Task(oneshot_B2, SCH_MS(3000), 0);
   SCH_Add_Task(oneshot_C,  SCH_MS(4500), 0);
 
+#if WDG_DEMO_HANG
+  SCH_Add_Task(task_hang, SCH_MS(WDG_DEMO_HANG_AT_MS), 0);
+#endif
+
+  // Bat watchdog ngay truoc tick: tu day SCH_Update phai refresh it nhat moi 1 s
+  Watchdog_Init();
   HAL_TIM_Base_Start_IT(&htim2);		// bat tick sau khi da them du task
   /* USER CODE END 2 */
 
