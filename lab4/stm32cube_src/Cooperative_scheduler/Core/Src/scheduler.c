@@ -11,6 +11,7 @@
  *  - Moi thao tac sua mang o vong while deu nam trong vung gang (tat ngat ngan).
  */
 #include "scheduler.h"
+#include "watchdog.h"
 #include "main.h"
 #include <stddef.h>
 
@@ -141,6 +142,12 @@ uint8_t SCH_Delete_Task(uint32_t TaskID){
 // Trong ngat TIM2: O(1), chi xet task dau danh sach
 void SCH_Update(void){
 	SCH_ticks++;
+
+	// Watchdog: chi refresh khi vong while van quay ve dispatcher trong WDG_MAX_MISSED_TICKS tick.
+	// Refresh vo dieu kien o day la SAI: task treo thi ISR van refresh, watchdog khong bao gio reset
+	Watchdog_Counting();
+	if (!Is_Watchdog_Reset()) Watchdog_Refresh();
+
 	if (SCH_Count == 0) return;
 
 	// Task dau da den han nhung vong while chua kip chay: ghi lai tick nay de bu
@@ -154,6 +161,9 @@ void SCH_Update(void){
 
 void SCH_Dispatch_Tasks(void){
 	for (;;){
+		// Bao "vong while con song" truoc moi task -> moi task duoc toi da WDG_MAX_MISSED_TICKS tick
+		Reset_Watchdog_Counting();
+
 		uint32_t pm = sch_lock();
 
 		// 1. Bu cac tick bi tre cho task dau (neu task dau chua den han)
